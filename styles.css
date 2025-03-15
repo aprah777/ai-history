@@ -1,0 +1,371 @@
+/* styles.css */
+
+/* 1. Basic Reset and Global Styles */
+:root {
+    --primary-blue: #1E90FF; /* 科技蓝，可以调整 */
+    --secondary-blue: #007BFF; /* 稍深蓝，辅助色 */
+    --light-gray: #f8f9fa;
+    --text-color: #333;
+    --heading-color: #222;
+    --font-family-english: 'Poppins', sans-serif; /* 英文 */
+    --font-family-chinese: 'Noto Sans SC', sans-serif; /* 中文，示例，替换为 阿里巴巴普惠体 */
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family-chinese), var(--font-family-english); /* 优先中文，英文备选 */
+    color: var(--text-color);
+    background-color: #fff;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--heading-color);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-family-english); /* 标题使用英文字体，更现代 */
+}
+
+p {
+    margin-bottom: 1rem;
+    font-family: var(--font-family-chinese); /* 正文使用中文字体 */
+}
+
+a {
+    color: var(--secondary-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Reusable container for layout */
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* 2. Header Styles */
+.header {
+    background-color: var(--light-gray);
+    padding: 40px 0;
+    text-align: center;
+}
+
+.header .logo img {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.header-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.header-content h2 {
+    font-size: 1.5rem;
+    color: var(--primary-blue);
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.header-content .brand-intro {
+    font-size: 1rem;
+    color: #777;
+    margin-bottom: 2rem;
+}
+
+/* Buttons - Common Styles */
+.cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Header CTA Button */
+.header-content .cta-button.wechat-cta {
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+.header-content .cta-button.wechat-cta:hover {
+    background-color: var(--secondary-blue);
+    text-decoration: none;
+}
+
+
+/* 3. Timeline Section Styles */
+.timeline-section {
+    padding: 60px 0;
+}
+
+.timeline-section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 900px; /* 限制时间轴宽度 */
+    margin: 0 auto;
+    position: relative; /* for vertical line */
+}
+
+/* Vertical Line for Timeline */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background-color: #ddd; /* Light gray line */
+    height: 100%;
+}
+
+.timeline-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+    display: flex;
+    align-items: center;
+    position: relative; /* for icon circle */
+    opacity: 0; /* Initial opacity for fade-in animation */
+    transform: translateY(20px); /* Initial position for fade-in animation */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.timeline-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* Timeline Card Icon */
+.timeline-card .card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    z-index: 1; /* Ensure icon is above vertical line */
+}
+
+/* Position icon circle on the timeline line */
+.timeline-card .card-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: white; /* White circle on the line */
+    border: 2px solid var(--primary-blue); /* Border color same as icon background */
+    z-index: -1; /* Place behind icon */
+}
+.timeline-card .card-content {
+    flex: 1;
+}
+
+.timeline-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-card h4 {
+    font-size: 1rem;
+    color: var(--secondary-blue);
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+
+/* Position timeline cards to left and right */
+.timeline-card:nth-child(odd) {
+    align-self: flex-start;
+    margin-right: auto;
+    text-align: right;
+    flex-direction: row-reverse; /* Icon on the left for odd cards */
+}
+
+.timeline-card:nth-child(odd) .card-icon {
+    margin-left: 20px;
+    margin-right: 0;
+}
+
+
+.timeline-card:nth-child(even) {
+    align-self: flex-end;
+    margin-left: auto;
+    text-align: left;
+}
+
+
+/* 4. Application Section Styles */
+.application-section {
+    padding: 60px 0;
+    background-color: var(--light-gray);
+}
+
+.application-section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2rem;
+}
+
+.application-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 30px;
+}
+
+.application-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.application-card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+}
+
+.application-card .card-icon {
+    font-size: 2rem;
+    color: var(--primary-blue);
+    margin-bottom: 20px;
+}
+
+.application-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.application-card p {
+    color: #666;
+}
+
+
+/* 5. Future Section Styles */
+.future-section {
+    padding: 60px 0;
+    text-align: center;
+}
+
+.future-section h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.future-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.future-content p {
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.future-section .cta-button.community-cta {
+    background-color: white;
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-blue);
+}
+
+.future-section .cta-button.community-cta:hover {
+    background-color: var(--primary-blue);
+    color: white;
+    border-color: var(--primary-blue); /* Keep border color on hover */
+}
+
+
+/* 6. Footer Styles */
+.footer {
+    background-color: #f0f0f0;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+
+/* 7. Responsiveness */
+@media (max-width: 768px) {
+    .header {
+        padding: 30px 0;
+    }
+
+    .header .logo img {
+        max-width: 120px;
+    }
+
+    .header-content h1 {
+        font-size: 2rem;
+    }
+
+    .header-content h2 {
+        font-size: 1.2rem;
+    }
+
+    .timeline::before {
+        left: 10px; /* Adjust vertical line position on smaller screens */
+    }
+
+    .timeline-card {
+        flex-direction: column; /* Stack content vertically on small screens */
+        text-align: center;
+    }
+
+    .timeline-card .card-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .timeline-card:nth-child(odd),
+    .timeline-card:nth-child(even) {
+        align-self: stretch; /* Full width on small screens */
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center; /* Center text for all cards */
+        flex-direction: column; /* Ensure vertical layout for all */
+    }
+
+    .timeline-card:nth-child(odd) .card-icon {
+        margin-left: 0; /* Reset icon margins for stacked layout */
+    }
+}
+
+
+/* 8. Animations (Scroll Fade-in for Timeline) - JavaScript will handle adding 'in-view' class */
